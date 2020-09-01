@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     pd_name: ""
-    zbx_db_pass: "" #PREENCHIMENTO OBRIGATÓRIO NA INSTALAÇÃO DO ZABBIX
+    zbx_db_pass: "zabbix" #PREENCHIMENTO OBRIGATÓRIO NA INSTALAÇÃO DO ZABBIX
     zbx_db_user: "zabbix"
     zbx_db_name: "zabbix"
     url_zabbix_api: "http://localhost/api_jsonrpc.php"
@@ -13,7 +13,6 @@
   become: yes
   roles:
     #- zabbix-server
-    #- zabbix-change-password
     #- common
     #- mysql
     #- nginx
