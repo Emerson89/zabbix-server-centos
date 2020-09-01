@@ -13,6 +13,9 @@
   become: yes
   roles:
     #- zabbix-server
-    #- zabbix-template #Descomentar apenas este para realizar a instalação do zabbix server
     #- zabbix-change-password
     #- common
+    #- mysql
+    #- nginx
+    #- php-fpm
+

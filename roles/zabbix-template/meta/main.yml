@@ -1,2 +1,0 @@
-dependencies:
-  - { role: zabbix-change-password, tags: zabbix-template}
