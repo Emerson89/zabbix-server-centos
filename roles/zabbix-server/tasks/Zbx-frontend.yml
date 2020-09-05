@@ -27,10 +27,15 @@
 
 - name: Copy web.zabbix.conf template 
   template:
-    src: templates/web.zabbix.conf.j2
+    src: templates/zabbix_web.conf.j2
     dest: /etc/httpd/conf.d/zabbix.conf
   notify: restart httpd
-  
+
+- name: Start firewall
+  service: 
+    name: firewalld
+    state: started
+
 - name: Create firewall rule
   firewalld:
     port: 80/tcp
