@@ -1,0 +1,37 @@
+- name: Set some fact
+  set_fact:
+    zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
+- name: Install Zabbix Repo.
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+    gpgkey: "{{ item.gpgkey }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ zabbix_repo_yum }}"
+- name: Install package Zabbix
+  yum:
+    name:
+      - zabbix-web-{{ zabbix_server_database }}
+      - zabbix-get
+      - zabbix-sender
+- name: Make sure httpd service is running
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+- name: Copy web.zabbix.conf template 
+  template:
+    src: templates/web.zabbix.conf.j2
+    dest: /etc/httpd/conf.d/zabbix.conf
+  notify: restart httpd
+  
+- name: Create firewall rule
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+- name: Firewalld reload
+  command: firewall-cmd --reload

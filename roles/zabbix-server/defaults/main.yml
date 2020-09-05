@@ -1,21 +1,42 @@
----
-# URL do repo.zabbix.com da versão do Zabbix Release
-url_zabbix_server: "http://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-release-4.4-1.el7.noarch.rpm"
-
-# Endpoint do banco
-mysql_bind_address: localhost
-mysql_port: 3306
-
-# Nome, usuário e senha do banco do Zabbix
-zbx_db_name: zabbix
-zbx_db_user: zabbix
-zbx_db_pass: zabbix
-
-# Tunning do Zabbix Server
-StartPollers: 15
-StartPollersUnreachable: 15
-StartPingers: 10
-CacheSize: 128M
-HistoryCacheSize: 128M
-TrendCacheSize: 32M
-Timeout: 30
+zabbix_version: 4.4
+zbx_server_address: 127.0.0.1
+zbx_frontend_address: 127.0.0.1
+zbx_database_address: 127.0.0.1
+zbx_database_saas: False
+mysql_root_password: Zabbixdb#2019!
+zbx_database_user: zabbix
+zbx_database_password: ZabbixDB#2019!
+zabbix_server_package_state: present
+zabbix_server_install_recommends: True
+zabbix_server_install_database_cliente: True
+zabbix_repo: zabbix
+zabbix_repo_yum:
+  - name: zabbix
+    description: Zabbix Official Repository - $basearch
+    baseurl: http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present
+  - name: zabbix-supported
+    description: Zabbix Official Repository non-supported - $basearch
+    baseurl: http://repo.zabbix.com/non-supported/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
+    state: present
+# Zabbix Server parameters
+zbx_start_pollers: 10
+zbx_start_pollersunreachable: 10
+zbx_start_trappers: 10
+zbx_start_pingers: 10
+zbx_timeout: 30
+zbx_cache_size: 256M
+zbx_value_cache_size: 256M
+# Frontend parameters
+time_zone: America/Sao_Paulo
+# Database
+zabbix_server_database: mysql # mysql or pgsql
+zabbix_server_database_long: mysql # mysql or postgresql
+zabbix_database_creation: True
+zabbix_database_sqlload: True
+# MySQL
+mysql_repo: https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm

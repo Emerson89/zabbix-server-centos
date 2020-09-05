@@ -1,0 +1,39 @@
+- name: Set some fact
+  set_fact:
+    zabbix_short_version: "{{ zabbix_version | regex_replace('\\.', '') }}"
+- name: Install Zabbix Repo.
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+    gpgkey: "{{ item.gpgkey }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ zabbix_repo_yum }}"
+- name: Install package Zabbix
+  yum:
+    name:
+      - zabbix-server-{{ zabbix_server_database }}
+      - zabbix-get
+      - zabbix-sender
+- name: Import initial schema zabbix database
+  shell: "zcat /usr/share/doc/zabbix-server-{{ zabbix_server_database }}*/create.sql.gz | mysql -h {{ zbx_database_address }} -u{{ zbx_database_user }} -p{{ zbx_database_password }} zabbix"
+  register: result_schema
+- name: Debug
+  debug:
+    msg: "{{ result_schema }}"
+- name: Create /etc/zabbix/scripts
+  file: 
+    path: /etc/zabbix/scripts
+    state: directory
+    recurse: yes
+- name: Make sure zabbix-server service is running
+  systemd:
+    name: zabbix-server
+    state: started
+    enabled: yes
+- name: Copy zabbix_server.conf template 
+  template:
+    src: templates/zabbix_server.conf.44.j2
+    dest: /etc/zabbix/zabbix_server.conf
+  notify: restart zabbix-server
