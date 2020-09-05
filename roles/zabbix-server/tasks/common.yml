@@ -1,9 +1,11 @@
 - name: Debug IPv4
   debug: 
     msg: "{{ ansible_default_ipv4.address }} {{ ansible_all_ipv4_addresses[0] }} {{ ansible_lo.ipv4.address }} {{ zbx_server_address }} {{ zbx_frontend_address }} {{ zbx_database_address }}"
+
 - name: Disable SELinux
   selinux:
     state: disabled
+
 - name: Install packages
   yum:
     name: 
@@ -18,12 +20,14 @@
         - python36
         - python36-pip
     state: present
+
 - name: Install python packages
   yum:
     name:
         - python
         - python-pip
     state: present
+
 - name: Install pip packages
   pip:
     name:
