@@ -20,7 +20,7 @@
       - zabbix-sender
 
 - name: Import initial schema zabbix database
-  shell: "zcat /usr/share/doc/zabbix-server-{{ zabbix_server_database }}*/create.sql.gz | mysql -h {{ zbx_database_address }} -u{{ zbx_database_user }} -p{{ zbx_database_password }} zabbix"
+  shell: "zcat /usr/share/doc/zabbix-server-{{ zabbix_server_database }}/create.sql.gz | mysql -h {{ zbx_database_address }} -u{{ zbx_database_user }} -p{{ zbx_database_password }} zabbix"
   register: result_schema
 
 - name: Debug
