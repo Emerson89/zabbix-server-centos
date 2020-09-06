@@ -31,9 +31,9 @@
     password: "{{ mysql_root_password }}"
   when: r.stat.exists==True
 
-#- name: Set new password from temporary password
-#  shell: 'mysql -e "SET PASSWORD = PASSWORD "{{ mysql_root_password }}";" --connect-expired-password -uroot -p"{{ mysql_root_password_temp.stdout }}"'
-#  when: r.stat.exists==False
+- name: Set new password from temporary password
+  shell: 'mysql -e "SET PASSWORD = PASSWORD(''{{ mysql_root_password }}'');" --connect-expired-password -uroot -p"{{ mysql_root_password_temp.stdout }}"'
+  when: r.stat.exists==False
 
 - name: Create `/root/.my.cnf`  with root password credentials
   template:
@@ -68,4 +68,4 @@
     - "{{ zbx_server_address }}"
     - "{{ zbx_frontend_address }}"
     - "{{ zbx_database_address }}"
-  notify: restart mysql
+  notify: restart mysql 
