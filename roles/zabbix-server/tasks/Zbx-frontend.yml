@@ -15,7 +15,7 @@
 - name: Install package Zabbix
   yum:
     name:
-      - zabbix-web-{{ zabbix_server_database }}
+      - zabbix-web
       - zabbix-get
       - zabbix-sender
 
