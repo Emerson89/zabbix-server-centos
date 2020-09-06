@@ -63,7 +63,7 @@
     state: present
 
 - name: Create zabbix MySQL user accounts
-  mysql_user: name={{ zbx_database_user }} password={{ zbx_database_password }} priv=zabbix.*:ALL host={{ item }} state=present
+  mysql_user: name={{ zbx_database_user }} password={{ zbx_database_password }} priv=*.*:ALL host={{ item }} state=present
   with_items:
     - "{{ zbx_server_address }}"
     - "{{ zbx_frontend_address }}"
