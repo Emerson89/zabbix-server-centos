@@ -34,6 +34,12 @@
     state: directory
     recurse: yes
 
+- name: Make sure zabbix-agent service is running
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+
 - name: Make sure zabbix-server service is running
   systemd:
     name: zabbix-server
