@@ -16,8 +16,6 @@
   yum:
     name:
       - zabbix-web-mysql
-      - zabbix-get
-      - zabbix-sender
 
 - name: Make sure httpd service is running
   systemd:

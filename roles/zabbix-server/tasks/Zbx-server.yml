@@ -20,14 +20,6 @@
       - zabbix-sender
       - zabbix-agent
 
-- name: Import initial schema zabbix database
-  shell: "zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -h {{ zbx_database_address }} -u{{ zbx_database_user }} -p{{ zbx_database_password }} zabbix"
-  register: result_schema
-
-- name: Debug
-  debug:
-    msg: "{{ result_schema }}"
-
 - name: Create /etc/zabbix/scripts
   file: 
     path: /etc/zabbix/scripts
