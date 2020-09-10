@@ -15,4 +15,6 @@
   roles:
   - zabbix-server
 ```
-## ansible-playbook -i hosts zabbix.yml
+``` 
+ansible-playbook -i hosts zabbix.yml
+``` 
