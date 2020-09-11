@@ -12,13 +12,17 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ zabbix_repo_yum }}"
 
-- name: Install package Zabbix
+- name: Install Zabbix packeges
   yum:
-    name:
-      - zabbix-server-mysql
-      - zabbix-get
-      - zabbix-sender
-      - zabbix-agent
+    name: "{{ packeges }}"
+  vars:
+    packeges:
+    - zabbix-server-mysql
+    - zabbix-web-mysql
+    - zabbix-agent
+    - zabbix-get
+  tags:
+    - zabbix-server
 
 - name: Create /etc/zabbix/scripts
   file: 
