@@ -8,6 +8,8 @@
 
 ## Edite o arquivo hosts para ip do host destino
 
+## Caso instale em OnPremisses descomente o trecho no Zbx-frontend.yml firewald
+
 ## Exemplo de playbook
 ```
 ---
