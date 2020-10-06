@@ -10,16 +10,18 @@
     dest: /etc/httpd/conf.d/zabbix.conf
   notify: restart httpd
 
-- name: Start firewall
-  service: 
-    name: firewalld
-    state: started
+##Descomentar abaixo caso instale em OnPremisses
 
-- name: Create firewall rule
-  firewalld:
-    port: 80/tcp
-    permanent: yes
-    immediate: yes
-    state: enabled
-- name: Firewalld reload
-  command: firewall-cmd --reload
+#- name: Start firewall
+#  service: 
+#    name: firewalld
+#    state: started
+
+#- name: Create firewall rule
+#  firewalld:
+#    port: 80/tcp
+#    permanent: yes
+#    immediate: yes
+#    state: enabled
+#- name: Firewalld reload
+#  command: firewall-cmd --reload
