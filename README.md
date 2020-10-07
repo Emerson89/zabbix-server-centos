@@ -1,6 +1,7 @@
 # Instalação zabbix-server usando ansible
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
+![Badge](https://img.shields.io/badge/aws-zabbix-red)
 
 ## Dependências
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
@@ -8,7 +9,7 @@
 
 ## Edite o arquivo hosts para ip do host destino
 
-## Caso instale em OnPremisses descomente o trecho no Zbx-frontend.yml firewald
+## Caso instale em OnPremisses use a v1.0
 
 ## Exemplo de playbook
 ```
