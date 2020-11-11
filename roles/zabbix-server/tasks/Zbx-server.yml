@@ -18,7 +18,7 @@
   vars:
     packeges:
     - zabbix-server-mysql
-    - zabbix-web-mysql-scl
+    - zabbix-web-mysql
     - zabbix-agent
     - zabbix-get
   tags:
