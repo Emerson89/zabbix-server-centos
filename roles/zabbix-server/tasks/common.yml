@@ -19,6 +19,7 @@
         - git
         - python36
         - python36-pip
+        - centos-release-scl
     state: present
 
 - name: Install python packages
