@@ -63,6 +63,12 @@
     state: started
     enabled: yes   
 
+- name: Configure Zabbix Server Web
+  template:
+      src: zabbix.conf.j2
+      dest: /etc/zabbix/web/zabbix.conf.php
+      mode: '0644'
+
 - name: Copy zabbix_server.conf template 
   template:
     src: templates/zabbix_server.conf.44.j2
