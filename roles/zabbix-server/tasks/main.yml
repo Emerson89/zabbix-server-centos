@@ -6,3 +6,5 @@
   include: "Zbx-server.yml"
 - name: Install Frontend
   include: "Zbx-frontend.yml"
+- name: Install change
+  include: "zbx-change.yml"
