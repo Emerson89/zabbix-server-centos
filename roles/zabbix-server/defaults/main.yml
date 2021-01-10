@@ -5,7 +5,7 @@ zbx_database_address: 127.0.0.1
 zbx_database_saas: False
 mysql_root_password: Zabbixdb#2020!
 mysql_port: 3306
-url_zabbix_api: http://localhost/api_jsonrpc.php
+url_zabbix_api: http://localhost/zabbix/api_jsonrpc.php
 zbx_database_db: zabbix
 zbx_database_user: zabbix
 zabbix_server_package_state: present

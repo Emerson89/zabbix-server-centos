@@ -56,7 +56,7 @@
 
 - name: Create a new database for Zabbix Server
   mysql_db:
-    name: zabbix
+    name: "{{ zbx_database_db }}"
     state: present
     encoding: utf8
     collation: utf8_bin
@@ -65,7 +65,7 @@
 
 - name: Create Zabbix server MySQL user
   mysql_user:
-    name: zabbix
+    name: "{{ zbx_database_user }}"
     password: "{{ zbx_database_password }}"
     priv: "zabbix.*:ALL"
     state: present

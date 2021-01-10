@@ -33,3 +33,4 @@
   pip:
     name:
         - pymysql
+    executable: pip-3
