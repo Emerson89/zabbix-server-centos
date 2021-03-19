@@ -7,9 +7,7 @@
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
 ![Badge](https://img.shields.io/badge/CentOS-7-blue)
 
-## Edite o arquivo hosts para ip do host destino, altere no arquivo zabbix.yml as senhas do GUI e BD de acordo com sua preferência
-
-## Caso instale em OnPremisses use a v1.0
+## Edite o arquivo hosts para ip do host destino, insira a senha do BD e do front
 
 ## Exemplo de playbook
 ```
@@ -22,8 +20,8 @@
   become: yes
   roles:
   - zabbix-server
-``` 
+
 ansible-playbook -i hosts zabbix.yml
-``` 
+```
 ## Licença
 ![Badge](https://img.shields.io/badge/license-GPLv3-green)
