@@ -1,30 +1,40 @@
-zabbix_version: 4.4
-zbx_server_address: 127.0.0.1
-zbx_frontend_address: 127.0.0.1
-zbx_database_address: 127.0.0.1
-zbx_database_saas: False
-mysql_root_password: Zabbixdb#2020!
-mysql_port: 3306
-url_zabbix_api: http://localhost/zabbix/api_jsonrpc.php
-zbx_database_db: zabbix
+zabbix_version: 5.0
+zabbix_hostname: "{{ ansible_ssh_host }}"
+zbx_database_name: zabbix
 zbx_database_user: zabbix
-zabbix_server_package_state: present
-zabbix_server_install_recommends: True
-zabbix_server_install_database_cliente: True
+mysql_root_pass: Tg0z64OVNzFwNA==
+zbx_database_address: localhost
+zbx_database_port: 3306
+zbx_server_address: localhost
+mysql_zabbix_pass.stdout:
+####Usuário console do Zabbix Server
+user_zabbix: Admin
+####URL para acesso via api
+url_zabbix_api: http://{{ ansible_ssh_host }}/api_jsonrpc.php
+#####Adicionado repo zabbix
 zabbix_repo: zabbix
 zabbix_repo_yum:
   - name: zabbix
     description: Zabbix Official Repository - $basearch
     baseurl: http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    enabled: 1 
     gpgcheck: 0
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
     state: present
+  - name: zabbix-frontend
+    description: Zabbix Official Repository - $basearch
+    file: zabbix
+    baseurl: http://repo.zabbix.com/zabbix/{{ zabbix_version }}/rhel/{{ ansible_distribution_major_version }}/$basearch/frontend
+    enabled: 0
+    gpgcheck: 0
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
   - name: zabbix-supported
     description: Zabbix Official Repository non-supported - $basearch
     baseurl: http://repo.zabbix.com/non-supported/rhel/{{ ansible_distribution_major_version }}/$basearch/
+    enabled: 1 
     gpgcheck: 0
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX
-    state: present
+    state: present    
 # Zabbix Server parameters
 zbx_start_pollers: 10
 zbx_start_pollersunreachable: 10
@@ -37,7 +47,7 @@ zbx_value_cache_size: 256M
 time_zone: America/Sao_Paulo
 # Database
 zabbix_server_database: mysql # mysql or pgsql
-zabbix_server_database_long: mysql # mysql or postgresql
+zabbix_server_database_long: mysql # mysql or pgsql
 zabbix_database_creation: True
 zabbix_database_sqlload: True
 # MySQL

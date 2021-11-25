@@ -4,12 +4,6 @@
     state: started
     enabled: yes
 
-- name: Configure Zabbix Server Web
-  template:
-    src: zabbix.conf.j2
-    dest: /etc/zabbix/web/zabbix.conf.php
-    mode: '0644'
-
 - name: Copy web.zabbix.conf template 
   template:
     src: templates/zabbix_web.conf.j2
@@ -20,6 +14,70 @@
   service:
     name: httpd
     state: restarted
+
+- name: Make sure php service is running
+  systemd:
+    name: rh-php72-php-fpm
+    state: started
+    enabled: yes
+  when: 
+   - ansible_distribution_major_version == '7'
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: Copy php.zabbix.conf template 
+  template:
+    src: templates/zabbix-php44.conf.j2
+    dest: /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf
+  when: 
+   - ansible_distribution_major_version == '7'
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: restart php
+  service:
+    name: rh-php72-php-fpm
+    state: restarted
+  when: 
+   - ansible_distribution_major_version == '7' 
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: Make sure nginx service is running
+  systemd:
+    name: rh-nginx116-nginx
+    state: started
+    enabled: yes
+  when: 
+   - ansible_distribution_major_version == '7' 
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: Copy web.zabbix.conf template 
+  template:
+    src: templates/zabbix_web.conf44.j2
+    dest: /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf
+  when: 
+   - ansible_distribution_major_version == '7'
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: Copy nginx.conf template 
+  template:
+    src: templates/nginx44.conf.j2
+    dest: /etc/opt/rh/rh-nginx116/nginx/nginx.conf
+  when: 
+   - ansible_distribution_major_version == '7' 
+   - zabbix_version is version_compare('5.0', '==')
+
+- name: Configure Zabbix Server Web
+  template:
+    src: zabbix.conf.j2
+    dest: /etc/zabbix/web/zabbix.conf.php
+    mode: '0644'
+  
+- name: restart nginx
+  service:
+    name: rh-nginx116-nginx
+    state: restarted
+  when: 
+   - ansible_distribution_major_version == '7' 
+   - zabbix_version is version_compare('5.0', '==')
 
 #- name: Start firewall
 #  service: 

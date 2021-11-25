@@ -7,49 +7,49 @@
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     baseurl: "{{ item.baseurl }}"
+    enabled: "{{ item.enabled }}"
     gpgcheck: "{{ item.gpgcheck }}"
     gpgkey: "{{ item.gpgkey }}"
     state: "{{ item.state | default('present') }}"
   with_items: "{{ zabbix_repo_yum }}"
+
+- name: Install Centos-scl
+  yum:
+     name:
+       - centos-release-scl
+  when: zabbix_version is version_compare('5.0', '==')
+   
+- name: Enable zabbix-frontend
+  shell: yum-config-manager --enable zabbix-frontend
+  when: zabbix_version is version_compare('5.0', '==')
+
+- name: "RedHat | Set facts for Zabbix <= 5.0"
+  set_fact:
+    datafiles_path: "/usr/share/doc/zabbix-server-{{ zabbix_server_database }}*"
+  when:
+    - zabbix_version is version_compare('5.0', '<=')
 
 - name: Install Zabbix packeges
   yum:
     name: "{{ packeges }}"
   vars:
     packeges:
-    - zabbix-server-mysql
-    - zabbix-web-mysql
-    - zabbix-agent
+    - zabbix-nginx-conf-scl
+    - zabbix-web-{{ zabbix_server_database }}-scl
     - zabbix-get
-  tags:
-    - zabbix-server
+    - zabbix-agent
+  when: 
+    - zabbix_version is version_compare('5.0', '==')
 
-- name: Create /etc/zabbix/scripts
-  file: 
-    path: /etc/zabbix/scripts
-    state: directory
-    recurse: yes
-
-- name: Check if schema for Zabbix Server already loaded
-  shell: mysql -u{{ zbx_database_user }} -p{{ zbx_database_password }} zabbix -e "SHOW TABLES LIKE 'users'" -sN
-  register: dbstatus
-  failed_when: dbstatus.rc == 2
-  tags:
-    - zabbix-server
-
-- name: Copy schema DB
-  shell: cp /usr/share/doc/zabbix-server-mysql-*/create.sql.gz /tmp
-  tags:
-    - zabbix-server
-
-- name: Import database Zabbix
-  mysql_db:
-   name: "{{ zbx_database_db }}"
-   state: import
-   target: /tmp/create.sql.gz
-  ignore_errors: true
-  tags:
-    - zabbix-server
+- name: Install Zabbix packeges
+  yum:
+    name: "{{ packeges }}"
+  vars:
+    packeges:
+    - zabbix-server-{{ zabbix_server_database }}
+    - zabbix-agent
+  when:
+   - zabbix_version <= 4.4
     
 - name: Make sure zabbix-agent service is running
   systemd:
