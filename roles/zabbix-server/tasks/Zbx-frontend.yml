@@ -49,7 +49,7 @@
    - ansible_distribution_major_version == '7' 
    - zabbix_version is version_compare('5.0', '==')
 
-- name: Copy web.zabbix.conf template 
+- name: Copy web.zabbix.conf templates
   template:
     src: templates/zabbix_web.conf44.j2
     dest: /etc/opt/rh/rh-nginx116/nginx/conf.d/zabbix.conf
