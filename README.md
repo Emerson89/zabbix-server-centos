@@ -23,5 +23,13 @@
 
 ansible-playbook -i hosts zabbix.yml
 ```
+mysql_root_users:
+  - login_user: root
+    login_password: "" 
+    name: "{{ mysql_root_username }}"
+    password: "{{ mysql_root_pass }}"
+    host: "{{ zbx_user_privileges }}"
+    priv: "*.*:ALL,GRANT"
+
 ## Licença
 ![Badge](https://img.shields.io/badge/license-GPLv3-green)

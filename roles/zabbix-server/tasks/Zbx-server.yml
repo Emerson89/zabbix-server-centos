@@ -47,9 +47,10 @@
   vars:
     packeges:
     - zabbix-server-{{ zabbix_server_database }}
+    - zabbix-web-{{ zabbix_server_database }}
     - zabbix-agent
   when:
-   - zabbix_version <= 4.4
+    - zabbix_version is version_compare('4.4', '<=')
     
 - name: Make sure zabbix-agent service is running
   systemd:

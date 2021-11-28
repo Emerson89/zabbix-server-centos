@@ -4,9 +4,15 @@
     state: started
     enabled: yes
 
+- name: Configure Zabbix Server Web
+  template:
+    src: zabbix.conf.j2
+    dest: /etc/zabbix/web/zabbix.conf.php
+    mode: '0644'
+
 - name: Copy web.zabbix.conf template 
   template:
-    src: templates/zabbix_web.conf.j2
+    src: zabbix_web.conf.j2
     dest: /etc/httpd/conf.d/zabbix.conf
   notify: restart httpd
 
@@ -65,12 +71,6 @@
    - ansible_distribution_major_version == '7' 
    - zabbix_version is version_compare('5.0', '==')
 
-- name: Configure Zabbix Server Web
-  template:
-    src: zabbix.conf.j2
-    dest: /etc/zabbix/web/zabbix.conf.php
-    mode: '0644'
-  
 - name: restart nginx
   service:
     name: rh-nginx116-nginx

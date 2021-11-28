@@ -10,7 +10,7 @@ mysql_zabbix_pass.stdout:
 ####Usuário console do Zabbix Server
 user_zabbix: Admin
 ####URL para acesso via api
-url_zabbix_api: http://{{ ansible_ssh_host }}/api_jsonrpc.php
+url_zabbix_api: http://localhost/api_jsonrpc.php
 #####Adicionado repo zabbix
 zabbix_repo: zabbix
 zabbix_repo_yum:
