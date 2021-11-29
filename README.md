@@ -1,7 +1,6 @@
 # Instalação zabbix-server usando ansible
 
 ![Badge](https://img.shields.io/badge/ansible-zabbix-red)
-![Badge](https://img.shields.io/badge/aws-zabbix-red)
 
 ## Dependências
 ![Badge](https://img.shields.io/badge/ansible-2.9.10-blue)
