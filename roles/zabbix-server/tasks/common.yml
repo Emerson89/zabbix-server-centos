@@ -26,6 +26,6 @@
         - pymysql
     executable: pip-3
 
-#- name: Disable SELinux
-#  selinux:
-#    state: disabled
+- name: Disable SELinux
+  selinux:
+    state: disabled

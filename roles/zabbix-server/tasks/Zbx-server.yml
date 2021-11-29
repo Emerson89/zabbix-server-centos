@@ -29,11 +29,12 @@
   when:
     - zabbix_version is version_compare('5.0', '<=')
 
-- name: Install Zabbix packeges
+- name: Install Zabbix packeges | Version 5.0
   yum:
     name: "{{ packeges }}"
   vars:
     packeges:
+    - zabbix-server-{{ zabbix_server_database }}
     - zabbix-nginx-conf-scl
     - zabbix-web-{{ zabbix_server_database }}-scl
     - zabbix-get
@@ -66,7 +67,7 @@
 
 - name: Copy zabbix_server.conf template 
   template:
-    src: templates/zabbix_server.conf.44.j2
+    src: zabbix_server.conf.44.j2
     dest: /etc/zabbix/zabbix_server.conf
   notify: restart zabbix-server
 
