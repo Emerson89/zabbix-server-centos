@@ -4,7 +4,14 @@
     state: started
     enabled: yes
   when: zabbix_version is version_compare('4.4', '<=')
-  
+
+- name: Configure httpd.conf
+  lineinfile:
+    dest: "/etc/httpd/conf/httpd.conf"
+    regexp: 'DocumentRoot "/var/www/html"'
+    line: 'DocumentRoot "/usr/share/zabbix"'
+  when: zabbix_version is version_compare('4.4', '<=')
+   
 - name: Configure Zabbix Server Web
   template:
     src: zabbix.conf.j2

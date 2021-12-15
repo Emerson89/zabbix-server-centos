@@ -45,3 +45,27 @@
     owner: root
     mode: 0600
     force: no
+
+- name: Create Zabbix server MySQL user
+  mysql_user:
+    login_host: "{{ zbx_database_address }}"
+    login_user: "{{ mysql_root_username }}"
+    login_password: "{{ mysql_root_pass }}"
+    name: "{{ zbx_database_name }}"
+    host: "{{ item }}"
+    password: "{{ mysql_zabbix_pass.stdout }}"
+    priv: "{{ zbx_database_name }}.*:ALL"
+    state: present
+  with_items: 
+    - localhost
+  #no_log: true
+
+- name: Create a new database for Zabbix Server
+  mysql_db:
+    name: "{{ zbx_database_name }}"
+    collation: utf8_bin
+    encoding: utf8
+    state: present
+    login_host: "{{ zbx_database_address }}"
+    login_user: "{{ mysql_root_username }}"
+    login_password: "{{ mysql_root_pass }}"
