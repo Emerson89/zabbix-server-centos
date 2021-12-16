@@ -1,6 +1,16 @@
 ---
 - name: Install Zabbix Server
-  hosts: local
+  hosts: zab
   become: yes
   roles:
   - zabbix-server
+
+
+#LOGIN
+#curl -i -X POST -H 'Content-type:application/json' -d '{"jsonrpc":"2.0","method":"user.login","params":{ "user":"myUserName","password":"myPassword"},"auth":null,"id":0}' https://zabbix.server/api_jsonrpc.php
+
+#GET ALL HOSTS WITH NAME
+#curl -i -X POST -H 'Content-type:application/json' -d '{"jsonrpc":"2.0","method":"host.get","params":{"output": ["hostid", "name"]},"auth":"<AUTH_KEY>","id":0}' https://zabbix.server/api_jsonrpc.php
+
+#GET ALL HOSTS WITH NAME, HOSTNAME AND IP ADDRESS
+#curl -i -X POST -H 'Content-type:application/json' -d '{"jsonrpc":"2.0","method":"host.get","params":{"output":["hostid", "host", "name"], "selectInterfaces":["ip"]},"auth":"<AUTH_KEY>","id":0}' https://zabbix.server/api_jsonrpc.php

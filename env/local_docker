@@ -1,2 +1,0 @@
-[local]
-centos ansible_connection=docker
