@@ -1,3 +1,8 @@
+- name: Import a key new mysql
+  rpm_key:
+    state: present
+    key: https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
 - name: Install repo MySQL
   yum:
     name: "{{ mysql_repo }}"
@@ -5,10 +10,9 @@
 
 - name: "RedHat | Install Mysql"
   yum:
-    name: 
-        - mysql-server
-        - MySQL-python
+    name: mysql-server
     state: present
+    update_cache: true
 
 - name: Start MySQL and enable on boot
   service:
