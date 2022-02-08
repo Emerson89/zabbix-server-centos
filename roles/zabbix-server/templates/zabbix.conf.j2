@@ -8,6 +8,9 @@ $DB['PORT']     = '{{ zbx_database_port }}';
 $DB['DATABASE'] = '{{ zbx_database_name }}';
 $DB['USER']     = '{{ zbx_database_user }}';
 $DB['PASSWORD'] = '{{ mysql_zabbix_pass.stdout }}';
+{% if zabbix_version == "5.0" %}
+$DB['DOUBLE_IEEE754'] = 'true'; 
+{% endif %}
 
 // Schema name. Used for IBM DB2 and PostgreSQL.
 $DB['SCHEMA'] = '';
