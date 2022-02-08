@@ -7,7 +7,6 @@
   yum:
     name: 
         - mysql-server
-        - MySQL-python
     state: present
 
 - name: Start MySQL and enable on boot
